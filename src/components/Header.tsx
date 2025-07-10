@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-// import logo from "../assets/logo.png";
+import logo from "../assets/logo.png"
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false)
@@ -11,7 +11,7 @@ export default function Header() {
 			<div className='container mx-auto flex items-center justify-between py-4 px-6'>
 				{/* Logo + Title */}
 				<div className='flex items-center space-x-4'>
-					<img src='/logo.png' alt='Logo' className='h-8 w-auto' />
+					<img src={logo} alt='Logo' className='h-8 w-auto' />
 					<h1 className='text-xl font-bold text-gray-800'>
 						Investment Calculator
 					</h1>
