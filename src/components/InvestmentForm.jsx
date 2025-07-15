@@ -1,6 +1,23 @@
 import { Input } from "@/components/ui/input"
+import { useState } from "react"
 
 export default function InvestmentForm() {
+	const [inputValues, setInputValues] = useState({
+		initialInvestment: "",
+		annualInvestment: "",
+		expectedReturn: "",
+		duration: ""
+	})
+
+	const handleChange = e => {
+		const { id, value } = e.target
+
+		setInputValues(prevValues => ({
+			...prevValues,
+			[id]: value
+		}))
+	}
+
 	return (
 		<div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-green-200 via-green-100 to-green-300 px-4'>
 			<form className='w-full max-w-2xl bg-white p-8 rounded-xl shadow-md space-y-6'>
@@ -21,6 +38,9 @@ export default function InvestmentForm() {
 							id='initialInvestment'
 							type='number'
 							placeholder='Enter initial amount'
+							value={inputValues.initialInvestment}
+							onChange={handleChange}
+							className='text-gray-800'
 						/>
 					</div>
 
@@ -35,6 +55,9 @@ export default function InvestmentForm() {
 							id='annualInvestment'
 							type='number'
 							placeholder='Enter annual amount'
+							value={inputValues.annualInvestment}
+							onChange={handleChange}
+							className='text-gray-800'
 						/>
 					</div>
 				</div>
@@ -52,6 +75,9 @@ export default function InvestmentForm() {
 							id='expectedReturn'
 							type='number'
 							placeholder='Enter expected return'
+							value={inputValues.expectedReturn}
+							onChange={handleChange}
+							className='text-gray-800'
 						/>
 					</div>
 
@@ -66,6 +92,9 @@ export default function InvestmentForm() {
 							id='duration'
 							type='number'
 							placeholder='Enter number of years'
+							value={inputValues.duration}
+							onChange={handleChange}
+							className='text-gray-800'
 						/>
 					</div>
 				</div>
