@@ -68,7 +68,10 @@ export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 						type='number'
 						placeholder='Enter initial amount'
 						{...register("initialInvestment")}
-						className='text-gray-800'
+						className={`text-gray-800 ${
+							errors.initialInvestment &&
+							"border-red-500 focus:ring-red-500 focus:border-red-500"
+						}`}
 					/>
 					{errors.initialInvestment && (
 						<p className='text-red-500 text-sm mt-1'>
@@ -89,7 +92,10 @@ export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 						type='number'
 						placeholder='Enter annual amount'
 						{...register("annualInvestment")}
-						className='text-gray-800'
+						className={`text-gray-800 ${
+							errors.annualInvestment &&
+							"border-red-500 focus:ring-red-500 focus:border-red-500"
+						}`}
 					/>
 					{errors.annualInvestment && (
 						<p className='text-red-500 text-sm mt-1'>
@@ -113,7 +119,11 @@ export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 						type='number'
 						placeholder='Enter expected return'
 						{...register("expectedReturn")}
-						className='text-gray-800'
+						className={`text-gray-800 ${
+							errors.expectedReturn
+								? "border-red-500 focus:ring-red-500 focus:border-red-500"
+								: ""
+						}`}
 					/>
 					{errors.expectedReturn && (
 						<p className='text-red-500 text-sm mt-1'>
