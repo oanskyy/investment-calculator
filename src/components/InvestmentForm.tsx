@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input"
 import { YearlyResult } from "../App"
+import toast from "react-hot-toast"
 
 import { calculateInvestmentResults } from "@/util/investment"
 import { investmentSchema, InvestmentFormData } from "@/lib/schema"
@@ -43,6 +44,7 @@ export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 		console.table(results)
 
 		onResult(results)
+		toast.success("Calculation successful!")
 	}
 
 	return (

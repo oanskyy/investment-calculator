@@ -2,6 +2,7 @@ import { useState } from "react"
 import Header from "./components/Header"
 import InvestmentForm from "./components/InvestmentForm"
 import ResultCard from "./components/ResultCard"
+import { Toaster } from "react-hot-toast"
 
 export type YearlyResult = {
 	year: number
@@ -20,6 +21,8 @@ function App() {
 			<main className='flex flex-col items-center flex-grow px-4 py-12 '>
 				<InvestmentForm onResult={setResult} />
 				{result && <ResultCard value={result} />}
+				{/* Add toaster here */}
+				<Toaster position='top-right' />
 			</main>
 
 			{/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
