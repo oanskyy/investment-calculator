@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
+
 import Header from './components/Header';
 import InvestmentForm from './components/InvestmentForm';
 import ResultCard from './components/ResultCard';
-import { Toaster } from 'react-hot-toast';
 
 export type YearlyResult = {
   year: number;
@@ -21,7 +22,6 @@ function App() {
       <main className="flex flex-grow flex-col items-center px-4 py-12">
         <InvestmentForm onResult={setResult} />
         {result && <ResultCard value={result} />}
-        {/* Add toaster here */}
         <Toaster position="top-right" />
       </main>
 

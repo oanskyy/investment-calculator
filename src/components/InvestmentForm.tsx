@@ -1,13 +1,9 @@
+import { Input } from '@/components/ui/input';
+import { InvestmentFormData, investmentSchema } from '@/lib/schema';
+import { calculateInvestmentResults } from '@/util/investment';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-
-import { Input } from '@/components/ui/input';
-
-import { InvestmentFormData, investmentSchema } from '@/lib/schema';
-
-import { calculateInvestmentResults } from '@/util/investment';
-
 import { YearlyResult } from '../App';
 
 interface InvestmentFormProps {

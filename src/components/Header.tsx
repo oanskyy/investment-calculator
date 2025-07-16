@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import logo from '../assets/logo.png';
+import { useState } from "react";
+import logo from "../assets/logo.png";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,16 +7,21 @@ export default function Header() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="bg-white shadow-sm">
-      <div className="container mx-auto flex items-center justify-between px-6 py-4">
+    <header className="sticky top-0 z-50 bg-white shadow-sm">
+      <div className="container items-center justify-between px-6 py-4  mx-auto flex ">
         {/* Logo + Title */}
         <div className="flex items-center space-x-4">
           <img src={logo} alt="Logo" className="h-8 w-auto" />
-          <h1 className="text-xl font-bold text-gray-800">Investment Calculator</h1>
+          <h1 className="text-xl font-bold text-gray-800">
+            Investment Calculator
+          </h1>
         </div>
 
         {/* Hamburger for mobile */}
-        <button className="text-gray-800 focus:outline-none md:hidden" onClick={toggleMenu}>
+        <button
+          className="text-gray-800 focus:outline-none md:hidden"
+          onClick={toggleMenu}
+        >
           <svg
             className="h-6 w-6"
             fill="none"
@@ -43,14 +48,23 @@ export default function Header() {
         </button>
 
         {/* Navigation */}
-        <nav className={`space-x-4 md:flex ${isOpen ? 'block' : 'hidden'}`}>
-          <a href="/about" className="block text-gray-800 hover:text-gray-500 md:inline">
+        <nav className={`space-x-4 md:flex ${isOpen ? "block" : "hidden"}`}>
+          <a
+            href="/about"
+            className="block text-gray-800 hover:text-gray-500 md:inline"
+          >
             About
           </a>
-          <a href="/services" className="block text-gray-800 hover:text-gray-500 md:inline">
+          <a
+            href="/services"
+            className="block text-gray-800 hover:text-gray-500 md:inline"
+          >
             Services
           </a>
-          <a href="/contact" className="block text-gray-800 hover:text-gray-500 md:inline">
+          <a
+            href="/contact"
+            className="block text-gray-800 hover:text-gray-500 md:inline"
+          >
             Contact
           </a>
         </nav>

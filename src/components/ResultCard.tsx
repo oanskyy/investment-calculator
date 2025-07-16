@@ -1,4 +1,4 @@
-import { YearlyResult } from '../App';
+import { YearlyResult } from "../App";
 
 interface ResultCardProps {
   value: YearlyResult[];
@@ -26,27 +26,27 @@ export default function ResultCard({ value }: ResultCardProps) {
             <tr key={entry.year} className="border-b border-gray-200">
               <td className="px-4 py-3">{entry.year}</td>
               <td className="px-4 py-3">
-                {entry.interest.toLocaleString('en-GB', {
-                  style: 'currency',
-                  currency: 'GBP',
+                {entry.interest.toLocaleString("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
                 })}
               </td>
               <td className="px-4 py-3">
-                {entry.valueEndOfYear.toLocaleString('en-GB', {
-                  style: 'currency',
-                  currency: 'GBP',
+                {entry.valueEndOfYear.toLocaleString("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
                 })}
               </td>
               <td className="px-4 py-3">
-                {entry.totalInterest.toLocaleString('en-GB', {
-                  style: 'currency',
-                  currency: 'GBP',
+                {entry.totalInterest.toLocaleString("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
                 })}
               </td>
               <td className="px-4 py-3">
-                {entry.investedCapital.toLocaleString('en-GB', {
-                  style: 'currency',
-                  currency: 'GBP',
+                {entry.investedCapital.toLocaleString("en-GB", {
+                  style: "currency",
+                  currency: "GBP",
                 })}
               </td>
             </tr>
