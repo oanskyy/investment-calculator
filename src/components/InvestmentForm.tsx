@@ -8,19 +8,49 @@ export default function InvestmentForm() {
 		expectedReturn: "",
 		duration: ""
 	})
+	const [result, setResult] = useState<null | number>(null)
 
-	const handleChange = e => {
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault() // prevent page reload
+
+		// P = initial investment
+		// A = annual contribution
+		// r = annual interest rate (in decimal)
+		// t = years
+
+		// FV = P * (1 + r)^t + A * [((1 + r)^t - 1) / r]
+
+		const P = parseFloat(inputValues.initialInvestment)
+		const A = parseFloat(inputValues.annualInvestment)
+		const r = parseFloat(inputValues.expectedReturn) / 100
+		const t = parseFloat(inputValues.duration)
+
+		if (isNaN(P) || isNaN(A) || isNaN(r) || isNaN(t)) {
+			return // guard against invalid inputs
+		}
+
+		const futureValue =
+			P * Math.pow(1 + r, t) + A * ((Math.pow(1 + r, t) - 1) / r)
+
+		setResult(futureValue) // update the result
+	}
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
 
 		setInputValues(prevValues => ({
 			...prevValues,
 			[id]: value
 		}))
+		console.log(`Updated ${id}: ${value}`)
 	}
 
 	return (
-		<div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-green-200 via-green-100 to-green-300 px-4'>
-			<form className='w-full max-w-2xl bg-white p-8 rounded-xl shadow-md space-y-6'>
+		<div className='min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-200 via-green-100 to-green-300 px-4'>
+			<form
+				onSubmit={handleSubmit}
+				className='w-full max-w-2xl bg-white p-8 rounded-xl shadow-md space-y-6'
+			>
 				<h2 className='text-2xl font-bold text-gray-800 text-center'>
 					Investment Calculator
 				</h2>
@@ -106,6 +136,15 @@ export default function InvestmentForm() {
 					Calculate
 				</button>
 			</form>
+			{/* Result Display */}
+			{result !== null && (
+				<div className='mt-8 bg-white shadow-md rounded-lg p-6 text-center w-full max-w-2xl'>
+					<h3 className='text-lg text-gray-600 mb-2'>Estimated Future Value</h3>
+					<p className='text-3xl font-bold text-green-700 tracking-tight'>
+						£{result.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+					</p>
+				</div>
+			)}
 		</div>
 	)
 }
