@@ -4,6 +4,7 @@
 // - annualInvestment: The amount invested every year
 // - expectedReturn: The expected (annual) rate of return
 // - duration: The investment duration (time frame)
+
 // export function calculateInvestmentResults({
 // 	initialInvestment,
 // 	annualInvestment,
@@ -31,6 +32,7 @@
 
 // 	return annualData
 // }
+
 export function calculateInvestmentResults({
 	initialInvestment,
 	annualInvestment,
@@ -53,7 +55,7 @@ export function calculateInvestmentResults({
 		totalInvestedCapital += annualInvestment
 
 		// 2. Calculate interest on the updated investment
-		const interestEarnedInYear = investmentValue * (expectedReturn / 100)
+		const interestEarnedInYear = investmentValue * (expectedReturn)
 		investmentValue += interestEarnedInYear
 
 		// 3. Track total interest

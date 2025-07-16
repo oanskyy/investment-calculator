@@ -1,66 +1,53 @@
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
 import { YearlyResult } from "../App"
 
 import { calculateInvestmentResults } from "@/util/investment"
+import { investmentSchema, InvestmentFormData } from "@/lib/schema"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 interface InvestmentFormProps {
 	onResult: (value: YearlyResult[]) => void
 }
 
 export default function InvestmentForm({ onResult }: InvestmentFormProps) {
-	const [formValues, setFormValues] = useState({
-		initialInvestment: "",
-		annualInvestment: "",
-		expectedReturn: "",
-		duration: ""
+	// ✅ USE useForm from RHF
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm<InvestmentFormData>({
+		resolver: zodResolver(investmentSchema),
+		mode: "onTouched",
+		defaultValues: {
+			initialInvestment: "",
+			annualInvestment: "",
+			expectedReturn: "",
+			duration: ""
+		}
 	})
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault() // prevent page reload
+	const onSubmit = (data: InvestmentFormData) => {
+		const P = +data.initialInvestment
+		const A = +data.annualInvestment
+		const r = +data.expectedReturn / 100
+		const t = +data.duration
 
-		// P = initial investment
-		// A = annual contribution
-		// r = annual interest rate (in decimal)
-		// t = years
-		// FV = P * (1 + r)^t + A * [((1 + r)^t - 1) / r]
-
-		const P = parseFloat(formValues.initialInvestment)
-		const A = parseFloat(formValues.annualInvestment)
-		const r = parseFloat(formValues.expectedReturn) / 100
-		const t = parseFloat(formValues.duration)
-
-		if (isNaN(P) || isNaN(A) || isNaN(r) || isNaN(t)) {
-			return // guard against invalid inputs
-		}
-
-		console.log(`Calculating Future Value with: P=${P}, A=${A}, r=${r}, t=${t}`)
-		// const futureValue = calculateFutureValue(P, A, r, t)
-		const futureValues = calculateInvestmentResults({
+		const results = calculateInvestmentResults({
 			initialInvestment: P,
 			annualInvestment: A,
 			expectedReturn: r,
 			duration: t
 		})
 		console.log("Calculated Future Values:")
-		console.table(futureValues)
+		console.table(results)
 
-		onResult(futureValues) // update the result
-	}
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { id, value } = e.target
-
-		setFormValues(prevValues => ({
-			...prevValues,
-			[id]: +value
-		}))
-		console.log(`Updated ${id}: ${value}`)
+		onResult(results)
 	}
 
 	return (
 		<form
-			onSubmit={handleSubmit}
+			onSubmit={handleSubmit(onSubmit)}
 			className='w-full max-w-3xl bg-white p-8 rounded-xl shadow-md space-y-6'
 		>
 			<h2 className='text-2xl font-bold text-gray-800 text-center'>
@@ -80,10 +67,14 @@ export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 						id='initialInvestment'
 						type='number'
 						placeholder='Enter initial amount'
-						value={formValues.initialInvestment}
-						onChange={handleChange}
+						{...register("initialInvestment")}
 						className='text-gray-800'
 					/>
+					{errors.initialInvestment && (
+						<p className='text-red-500 text-sm mt-1'>
+							{errors.initialInvestment.message}
+						</p>
+					)}
 				</div>
 
 				<div>
@@ -97,10 +88,14 @@ export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 						id='annualInvestment'
 						type='number'
 						placeholder='Enter annual amount'
-						value={formValues.annualInvestment}
-						onChange={handleChange}
+						{...register("annualInvestment")}
 						className='text-gray-800'
 					/>
+					{errors.annualInvestment && (
+						<p className='text-red-500 text-sm mt-1'>
+							{errors.annualInvestment.message}
+						</p>
+					)}
 				</div>
 			</div>
 
@@ -117,10 +112,14 @@ export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 						id='expectedReturn'
 						type='number'
 						placeholder='Enter expected return'
-						value={formValues.expectedReturn}
-						onChange={handleChange}
+						{...register("expectedReturn")}
 						className='text-gray-800'
 					/>
+					{errors.expectedReturn && (
+						<p className='text-red-500 text-sm mt-1'>
+							{errors.expectedReturn.message}
+						</p>
+					)}
 				</div>
 
 				<div>
@@ -134,10 +133,14 @@ export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 						id='duration'
 						type='number'
 						placeholder='Enter number of years'
-						value={formValues.duration}
-						onChange={handleChange}
+						{...register("duration")}
 						className='text-gray-800'
 					/>
+					{errors.duration && (
+						<p className='text-red-500 text-sm mt-1'>
+							{errors.duration.message}
+						</p>
+					)}
 				</div>
 			</div>
 
