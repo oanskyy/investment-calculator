@@ -1,8 +1,10 @@
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
+import ResultCard from "./ResultCard"
+import { calculateFutureValue } from "@/lib/calculateFutureValue"
 
 export default function InvestmentForm() {
-	const [inputValues, setInputValues] = useState({
+	const [formValues, setFormValues] = useState({
 		initialInvestment: "",
 		annualInvestment: "",
 		expectedReturn: "",
@@ -17,20 +19,20 @@ export default function InvestmentForm() {
 		// A = annual contribution
 		// r = annual interest rate (in decimal)
 		// t = years
-
 		// FV = P * (1 + r)^t + A * [((1 + r)^t - 1) / r]
 
-		const P = parseFloat(inputValues.initialInvestment)
-		const A = parseFloat(inputValues.annualInvestment)
-		const r = parseFloat(inputValues.expectedReturn) / 100
-		const t = parseFloat(inputValues.duration)
+		const P = parseFloat(formValues.initialInvestment)
+		const A = parseFloat(formValues.annualInvestment)
+		const r = parseFloat(formValues.expectedReturn) / 100
+		const t = parseFloat(formValues.duration)
 
 		if (isNaN(P) || isNaN(A) || isNaN(r) || isNaN(t)) {
 			return // guard against invalid inputs
 		}
-
-		const futureValue =
-			P * Math.pow(1 + r, t) + A * ((Math.pow(1 + r, t) - 1) / r)
+		
+		console.log(`Calculating Future Value with: P=${P}, A=${A}, r=${r}, t=${t}`)
+		const futureValue = calculateFutureValue(P, A, r, t)
+		console.log(`Calculated Future Value: £${futureValue.toFixed(2)}`)
 
 		setResult(futureValue) // update the result
 	}
@@ -38,7 +40,7 @@ export default function InvestmentForm() {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
 
-		setInputValues(prevValues => ({
+		setFormValues(prevValues => ({
 			...prevValues,
 			[id]: value
 		}))
@@ -68,7 +70,7 @@ export default function InvestmentForm() {
 							id='initialInvestment'
 							type='number'
 							placeholder='Enter initial amount'
-							value={inputValues.initialInvestment}
+							value={formValues.initialInvestment}
 							onChange={handleChange}
 							className='text-gray-800'
 						/>
@@ -85,7 +87,7 @@ export default function InvestmentForm() {
 							id='annualInvestment'
 							type='number'
 							placeholder='Enter annual amount'
-							value={inputValues.annualInvestment}
+							value={formValues.annualInvestment}
 							onChange={handleChange}
 							className='text-gray-800'
 						/>
@@ -105,7 +107,7 @@ export default function InvestmentForm() {
 							id='expectedReturn'
 							type='number'
 							placeholder='Enter expected return'
-							value={inputValues.expectedReturn}
+							value={formValues.expectedReturn}
 							onChange={handleChange}
 							className='text-gray-800'
 						/>
@@ -122,7 +124,7 @@ export default function InvestmentForm() {
 							id='duration'
 							type='number'
 							placeholder='Enter number of years'
-							value={inputValues.duration}
+							value={formValues.duration}
 							onChange={handleChange}
 							className='text-gray-800'
 						/>
@@ -137,14 +139,7 @@ export default function InvestmentForm() {
 				</button>
 			</form>
 			{/* Result Display */}
-			{result !== null && (
-				<div className='mt-8 bg-white shadow-md rounded-lg p-6 text-center w-full max-w-2xl'>
-					<h3 className='text-lg text-gray-600 mb-2'>Estimated Future Value</h3>
-					<p className='text-3xl font-bold text-green-700 tracking-tight'>
-						£{result.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-					</p>
-				</div>
-			)}
+			{result !== null && <ResultCard value={result} />}
 		</div>
 	)
 }
