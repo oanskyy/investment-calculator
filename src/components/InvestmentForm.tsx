@@ -3,14 +3,17 @@ import { useState } from "react"
 import ResultCard from "./ResultCard"
 import { calculateFutureValue } from "@/lib/calculateFutureValue"
 
-export default function InvestmentForm() {
+interface InvestmentFormProps {
+	onResult: (value: number) => void
+}
+
+export default function InvestmentForm({ onResult }: InvestmentFormProps) {
 	const [formValues, setFormValues] = useState({
 		initialInvestment: "",
 		annualInvestment: "",
 		expectedReturn: "",
 		duration: ""
 	})
-	const [result, setResult] = useState<null | number>(null)
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault() // prevent page reload
@@ -29,12 +32,12 @@ export default function InvestmentForm() {
 		if (isNaN(P) || isNaN(A) || isNaN(r) || isNaN(t)) {
 			return // guard against invalid inputs
 		}
-		
+
 		console.log(`Calculating Future Value with: P=${P}, A=${A}, r=${r}, t=${t}`)
 		const futureValue = calculateFutureValue(P, A, r, t)
 		console.log(`Calculated Future Value: £${futureValue.toFixed(2)}`)
 
-		setResult(futureValue) // update the result
+		onResult(futureValue) // update the result
 	}
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,8 +141,6 @@ export default function InvestmentForm() {
 					Calculate
 				</button>
 			</form>
-			{/* Result Display */}
-			{result !== null && <ResultCard value={result} />}
 		</div>
 	)
 }
