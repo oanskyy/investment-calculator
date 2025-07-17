@@ -1,6 +1,7 @@
 # Investment Calculator
 
-A simple React app to calculate investment growth based on user input.
+A simple React app to calculate investment growth based on user input. 
+investment-calculator-202507.netlify.app 
 
 ## Features
 
@@ -8,6 +9,10 @@ A simple React app to calculate investment growth based on user input.
 - Calculate and display results using provided utility functions
 - Display results in an HTML table
 - Show an info message if invalid duration (<1) is entered
+
+----
+  [![Netlify Status](https://api.netlify.com/api/v1/badges/41f61e71-77a7-4a97-a841-1138b4099b25/deploy-status)](https://app.netlify.com/projects/investment-calculator-202507/deploys)
+----
 
 ## Getting Started
 
